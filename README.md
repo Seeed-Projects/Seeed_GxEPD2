@@ -1,3 +1,69 @@
+# Seeed_GxEPD2
+
+**Seeed Studio fork of [ZinggJM/GxEPD2](https://github.com/ZinggJM/GxEPD2), adapted to support Seeed Studio e-paper hardware.**
+
+This repository is maintained by Seeed Studio as the official GxEPD2 distribution
+for Seeed e-paper products. It tracks upstream GxEPD2 and adds:
+
+- Drop-in driver classes for Seeed panels that are not in upstream GxEPD2.
+- Ready-to-run example sketches for each Seeed e-paper product.
+- Optional grayscale demos for panels that support multi-level grayscale.
+- Small compatibility patches for Seeed hardware (e.g. extended busy-wait timeouts).
+
+The fork is **additive** — every upstream GxEPD2 feature continues to work for
+non-Seeed panels, so this library can also be used as a normal GxEPD2 install.
+
+## Currently supported Seeed devices
+
+### reTerminal E-Paper Series (ESP32-S3 based)
+
+| Model            | Display           | Resolution  | Controller             | Example folder                          |
+|------------------|-------------------|-------------|------------------------|------------------------------------------|
+| reTerminal E1001 | 7.5" Monochrome   | 800 × 480   | UC8179 (GDEY075T7)     | `examples/GxEPD2_reTerminal_E1001/`      |
+| reTerminal E1002 | 7.3" 7-Color      | 800 × 480   | GDEP073E01             | `examples/GxEPD2_reTerminal_E1002/`      |
+| reTerminal E1003 | 10.3" Monochrome  | 1872 × 1404 | IT8951 (ED103TC2)      | `examples/GxEPD2_reTerminal_E1003/`      |
+| reTerminal E1004 | 13.3" 6-Color     | 1200 × 1600 | T133A01 (dual-chip)    | `examples/GxEPD2_reTerminal_E1004/`      |
+
+**Grayscale demos**
+
+- `examples/GxEPD2_reTerminal_E1001_Gray4/` — 4-level grayscale on E1001
+  (UC8179 LUT + bit-plane encoding).
+- `examples/GxEPD2_reTerminal_E1003_Gray16/` — 16-level grayscale on E1003
+  (IT8951 8 BPP mode).
+
+> More Seeed Studio e-paper products will be added to this fork over time.
+> Pull requests that add support for new Seeed hardware are welcome.
+
+### Hardware notes specific to this fork
+
+- Custom driver classes for panels not in upstream GxEPD2 (E1003 / E1004) are
+  shipped **inside their own example folder** rather than under `src/`, so they
+  do not affect the compile time of other examples.
+- E1003 (IT8951) and E1004 (T133A01) require **PSRAM**. Make sure to enable
+  PSRAM in the Arduino IDE *Tools* menu when targeting reTerminal E-series.
+- E1004 uses a dual-chip controller (CS + CS1); see the example header for the
+  full pinout.
+
+## Issues, discussions and pull requests
+
+- Bug reports and feature requests for **Seeed-specific** code (the
+  `examples/GxEPD2_reTerminal_*` folders and Seeed compatibility patches)
+  should be opened on this repository's issue tracker.
+- Questions about the **upstream GxEPD2 library itself** (existing panel
+  drivers, paged drawing, BMP loaders, etc.) are better directed to
+  <https://github.com/ZinggJM/GxEPD2/discussions> — see the upstream notes
+  preserved below.
+
+---
+
+The remainder of this README is preserved verbatim from upstream
+[ZinggJM/GxEPD2](https://github.com/ZinggJM/GxEPD2) and continues to apply
+unchanged to Seeed devices. Refer to it for the full list of upstream-supported
+panels, the paged-drawing concept, full-screen buffer support and version
+history.
+
+---
+
 # GxEPD2
 ## Arduino Display Library for SPI E-Paper Displays
 
