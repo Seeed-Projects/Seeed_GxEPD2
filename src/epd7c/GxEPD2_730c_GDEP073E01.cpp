@@ -14,7 +14,10 @@
 #include "GxEPD2_730c_GDEP073E01.h"
 
 GxEPD2_730c_GDEP073E01::GxEPD2_730c_GDEP073E01(int16_t cs, int16_t dc, int16_t rst, int16_t busy) :
-  GxEPD2_EPD(cs, dc, rst, busy, LOW, 20000000, WIDTH, HEIGHT, panel, hasColor, hasPartialUpdate, hasFastPartialUpdate)
+  // busy_timeout: bumped from upstream's 20s to 45s. The GDEP073E01 7-color
+  // panel routinely takes 25-30s for a full refresh; the original 20s caused
+  // spurious "Busy Timeout!" warnings on every screen.
+  GxEPD2_EPD(cs, dc, rst, busy, LOW, 45000000, WIDTH, HEIGHT, panel, hasColor, hasPartialUpdate, hasFastPartialUpdate)
 {
 }
 
