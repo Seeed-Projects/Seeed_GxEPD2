@@ -46,16 +46,18 @@ static const uint8_t rb1[] = {0x02};
 #define RE0_CCSET 0xE0
 #define RE3_PWS   0xE3
 
-// GxEPD2 7-color encoding → T133A01 native encoding
+// GxEPD2 color encoding → T133A01 native encoding
 //
-// T133A01 native palette (Spectra 6, derived from Seeed_GFX COLOR_GET):
+// T133A01 native palette (Spectra 6 — Black/White/Red/Green/Blue/Yellow):
 //   0x00 = Black, 0x01 = White, 0x02 = Yellow, 0x03 = Red,
-//   0x05 = Blue,  0x06 = Green       (0x04, 0x07 unused)
+//   0x05 = Blue,  0x06 = Green       (0x04, 0x07 unused on this panel)
 //
-// GxEPD2 color7() palette:
+// GxEPD2 color7() palette (drawing API supports 7 entries):
 //   0=Black 1=White 2=Green 3=Blue 4=Red 5=Yellow 6=Orange 7=unused
 //
-// Spectra 6 has no Orange, so it is approximated by Red.
+// Spectra 6 has no orange; GxEPD_ORANGE is therefore aliased to yellow
+// (closest visual match).  Application code should normally avoid
+// GxEPD_ORANGE on this board.
 static const uint8_t _native_map[8] = {
   0x00, // 0: Black  -> 0x00
   0x01, // 1: White  -> 0x01
@@ -63,7 +65,7 @@ static const uint8_t _native_map[8] = {
   0x05, // 3: Blue   -> 0x05
   0x03, // 4: Red    -> 0x03
   0x02, // 5: Yellow -> 0x02
-  0x03, // 6: Orange -> 0x03 (no native orange; map to red)
+  0x02, // 6: Orange -> 0x02 (no native orange; alias to yellow)
   0x01, // 7: unused -> 0x01 (white fallback)
 };
 
